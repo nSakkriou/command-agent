@@ -1,7 +1,7 @@
 package types
 
 type Config struct {
-	Port              string
-	ScriptsFolderPath string
-	EndCommands       []*EndCommand
+	Port              int          `json:"port"`
+	ScriptsFolderPath string       `json:"scripts_folder_path"`
+	EndCommands       []EndCommand `json:"endcommands"`
 }

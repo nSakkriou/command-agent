@@ -1,6 +1,6 @@
 {
     "port" : 7890,
-    "scripts_folder_path" : "~/scripts/",
+    "scripts_folder_path" : "/scripts/",
     "endcommands" : [
       {
         "endpoint_name" : "start",

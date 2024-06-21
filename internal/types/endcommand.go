@@ -1,9 +1,9 @@
 package types
 
 type EndCommand struct {
-	EndpointName      string
-	Method            string
-	ScriptsFilesNames []string
+	EndpointName      string   `json:"endpoint_name"`
+	Method            string   `json:"method"`
+	ScriptsFilesNames []string `json:"scripts_files_names"`
 }
 
 // Renvoi script1,script2,script3 false si ils n'existe pas

@@ -10,7 +10,7 @@ func GetRouter(config *types.Config) *mux.Router {
 	router := mux.NewRouter()
 
 	for _, endCommand := range config.EndCommands {
-		handler := endpoint.GenerateEndpoint(endCommand)
+		handler := endpoint.GenerateEndpoint(&endCommand)
 		router.HandleFunc(endCommand.EndpointName, handler).Methods(endCommand.Method)
 	}
 
