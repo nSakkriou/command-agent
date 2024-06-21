@@ -28,3 +28,13 @@ func FileExist(path string) bool {
 	}
 	return true
 }
+
+func Prefix(s, char string) string {
+	if len(char) != 1 {
+		return s
+	}
+	if len(s) > 0 && s[0] == char[0] {
+		return s
+	}
+	return char + s
+}

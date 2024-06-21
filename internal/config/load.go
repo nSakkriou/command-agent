@@ -2,7 +2,6 @@ package config
 
 import (
 	"encoding/json"
-	"fmt"
 	"log"
 	"os"
 
@@ -26,8 +25,6 @@ func Load() error {
 	}
 
 	isLoad = true
-	fmt.Println(globalConf.EndCommands[0].EndpointName)
-
 	return nil
 }
 
