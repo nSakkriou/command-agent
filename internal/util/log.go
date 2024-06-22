@@ -2,13 +2,22 @@ package util
 
 import (
 	"fmt"
+	"strings"
 	"time"
 
 	"github.com/theritikchoure/logx"
 )
 
+func Error(message string, format ...interface{}) {
+	logfLevel("ERROR", message, logx.FGRED, format...)
+}
+
 func Info(message string, format ...interface{}) {
 	logfLevel("INFO", message, logx.FGGREEN, format...)
+}
+
+func Verbose(message string, format ...interface{}) {
+	logfLevel("VERBOSE", message, logx.FGYELLOW, format...)
 }
 
 func Debug(message string, format ...interface{}) {
@@ -19,16 +28,10 @@ func Raw(message string, format ...interface{}) {
 	logf(message, "", format...)
 }
 
-func Error(message string, format ...interface{}) {
-	logfLevel("ERROR", message, logx.FGRED, format...)
-}
-
-func Verbose(message string, format ...interface{}) {
-	logfLevel("VERBOSE", message, logx.FGYELLOW, format...)
-}
-
-// Ne pas utiliser
+// Ne pas utiliser directement
 func logf(message, color string, format ...interface{}) {
+	message = strings.ToLower(message)
+
 	if len(format) == 0 {
 		logx.Logf(message, color, "", format...)
 	} else {

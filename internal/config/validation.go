@@ -1,7 +1,6 @@
 package config
 
 import (
-	"fmt"
 	"path/filepath"
 
 	"github.com/nSakkriou/command-agent/internal/types"
@@ -15,18 +14,18 @@ import (
 // checker si les fichiers existes
 func ValidConfig(config *types.Config) bool {
 	if config.Port == 0 || config.Port == -1 {
-		fmt.Println("le n° de port n'est pas correct")
+		util.Error("le n° de port n'est pas correct")
 		return false
 	}
 
 	if util.IsEmpty(config.ScriptsFolderPath) {
-		fmt.Println("le champ scripts_folder_path est vide")
+		util.Error("le champ scripts_folder_path est vide")
 		return false
 	}
 
 	// Check si le dossier existe
 	if util.FileExist(config.ScriptsFolderPath) {
-		fmt.Println(config.ScriptsFolderPath + " does not exist")
+		util.Error("le dossier " + config.ScriptsFolderPath + " n'existe pas")
 		return false
 	}
 
@@ -34,7 +33,7 @@ func ValidConfig(config *types.Config) bool {
 	for _, endCommand := range config.EndCommands {
 		// Checker les doublons
 		if util.ArrayContains(endpointNames, endCommand.EndpointName) {
-			fmt.Println(endCommand.EndpointName + " est en double")
+			util.Error("le endpoint " + endCommand.EndpointName + " ne peut pas exister en double")
 			return false
 		}
 
@@ -44,7 +43,7 @@ func ValidConfig(config *types.Config) bool {
 		for _, scriptName := range endCommand.ScriptsFilesNames {
 			path := filepath.Join(config.ScriptsFolderPath, scriptName)
 			if util.FileExist(path) {
-				fmt.Println(path + "does not exist")
+				util.Error("le script " + path + " n'existe pas")
 				return false
 			}
 		}

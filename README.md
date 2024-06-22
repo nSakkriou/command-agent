@@ -10,3 +10,8 @@ Génére les endpoints
 ---
 
 Le config.json doit s'appeller AgentFile | EndCommandFile, ça ne sera que du json dedans, mais au moins comme ça on ne se pose pas de question du nom
+
+TODO :
+- Fixer les logs (artefacts)
+- Tester sur ma prod
+- Créer les commandes dans ma cli
