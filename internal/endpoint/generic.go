@@ -54,7 +54,7 @@ func setHeader(w http.ResponseWriter) http.ResponseWriter {
 	return w
 }
 
-func output(w http.ResponseWriter, response types.JSONResponse) {
+func output(w http.ResponseWriter, response interface{}) {
 	if err := json.NewEncoder(w).Encode(response); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}

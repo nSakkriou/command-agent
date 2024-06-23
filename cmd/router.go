@@ -20,6 +20,10 @@ func GetRouter(config *types.Config) *mux.Router {
 		router.HandleFunc(util.Prefix(endCommand.EndpointName, "/"), handler).Methods(endCommand.Method)
 	}
 
+	// Route de base
+	router.HandleFunc("/available", endpoint.AvailableEndpoint(config.EndCommands)).Methods("GET")
+	router.HandleFunc("/health", endpoint.HealthEndpoint).Methods("GET")
+
 	util.Verbose("Descriptif des routes")
 
 	router.Walk(func(route *mux.Route, router *mux.Router, ancestors []*mux.Route) error {
