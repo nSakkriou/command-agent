@@ -7,11 +7,13 @@ import (
 	"strings"
 
 	"github.com/nSakkriou/command-agent/internal/types"
-	"github.com/nSakkriou/command-agent/internal/util"
+	"github.com/nSakkriou/utils/pkg/agent"
+	"github.com/nSakkriou/utils/pkg/logn"
+	"github.com/nSakkriou/utils/pkg/util"
 )
 
 // Générer les fonctions des endpoint à partir d'un EndCommand
-func GenerateEndpoint(endCommand types.EndCommand, scriptFolderPath string) func(w http.ResponseWriter, r *http.Request) {
+func GenerateEndpoint(endCommand agent.EndCommand, scriptFolderPath string) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		w = setHeader(w)
 
@@ -20,7 +22,7 @@ func GenerateEndpoint(endCommand types.EndCommand, scriptFolderPath string) func
 			Outputs:  []types.FileOutput{},
 		}
 
-		util.Info("Execution du endpoint : %s", response.Endpoint)
+		logn.Info("Execution du endpoint : %s", response.Endpoint)
 
 		// Execution des scripts
 		for _, script := range endCommand.ScriptsFilesNames {
@@ -38,8 +40,8 @@ func GenerateEndpoint(endCommand types.EndCommand, scriptFolderPath string) func
 
 			output.Output = outputCommand
 
-			util.Verbose("Résulat du script : %s", script)
-			util.Verbose("%s", output)
+			logn.Verbose("Résulat du script : %s", script)
+			logn.Verbose("%s", output)
 
 			response.Outputs = append(response.Outputs, output)
 		}
@@ -64,13 +66,13 @@ func execCommand(scriptFile string, scriptFolderPath string) (string, error) {
 	scriptFolderPath = util.Prefix(scriptFolderPath, "/")
 	scriptFile = strings.TrimPrefix(scriptFile, "/")
 
-	util.Debug("%s %s", scriptFolderPath, scriptFile)
+	logn.Debug("%s %s", scriptFolderPath, scriptFile)
 
 	fullPath := scriptFolderPath + scriptFile
 
 	fullCommand := "." + fullPath
 
-	util.Verbose("command %s", fullCommand)
+	logn.Verbose("command %s", fullCommand)
 
 	cmd := exec.Command("sh", "-c", fullCommand)
 

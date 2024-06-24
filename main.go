@@ -6,7 +6,7 @@ import (
 	"os"
 
 	"github.com/nSakkriou/command-agent/cmd"
-	"github.com/nSakkriou/command-agent/internal/util"
+	"github.com/nSakkriou/utils/pkg/logn"
 	"github.com/theritikchoure/logx"
 )
 
@@ -22,20 +22,20 @@ func main() {
 	// - pas de doublons dans le nom des endpoints
 	// - les fichiers des endpoints existent
 	// Si tout ça est bon, on récupere la config
-	util.Info("Initialisation de la configuration", "")
+	logn.Info("Initialisation de la configuration")
 	globalConf := cmd.Config()
 
 	// 2. Générer le router et tous les endpoints défini dans le config (/cmd/router)
-	util.Info("Création du router", "")
+	logn.Info("Création du router")
 	router := cmd.GetRouter(globalConf)
 
 	// 3. Démarrage du serveur web avec notre port et notre router
 	http.Handle("/", router)
 
-	util.Info("Démarrage du serveur ... port %d", globalConf.Port)
+	logn.Info("Démarrage du serveur ... port %d", globalConf.Port)
 	err := http.ListenAndServe(":"+fmt.Sprint(globalConf.Port), router)
 	if err != nil {
-		util.Error("impossible de demarrer le serveur %s", err)
+		logn.Error("impossible de demarrer le serveur %s", err)
 		os.Exit(0)
 	}
 
@@ -43,6 +43,6 @@ func main() {
 
 func handlePanic() {
 	if r := recover(); r != nil {
-		util.Error("Impossible de continuer : %v", r)
+		logn.Error("Impossible de continuer : %v", r)
 	}
 }

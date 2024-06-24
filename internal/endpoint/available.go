@@ -4,10 +4,10 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/nSakkriou/command-agent/internal/types"
+	"github.com/nSakkriou/utils/pkg/agent"
 )
 
-func AvailableEndpoint(endCommandList []types.EndCommand) func(w http.ResponseWriter, r *http.Request) {
+func AvailableEndpoint(endCommandList []agent.EndCommand) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		w = setHeader(w)
 
