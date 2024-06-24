@@ -12,7 +12,7 @@ import (
 	"github.com/nSakkriou/utils/pkg/util"
 )
 
-// Générer les fonctions des endpoint à partir d'un EndCommand
+// Generate custom endpoint with agent.EndCommand information
 func GenerateEndpoint(endCommand agent.EndCommand, scriptFolderPath string) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		w = setHeader(w)
@@ -22,25 +22,25 @@ func GenerateEndpoint(endCommand agent.EndCommand, scriptFolderPath string) func
 			Outputs:  []types.FileOutput{},
 		}
 
-		logn.Info("Execution du endpoint : %s", response.Endpoint)
+		logn.Info("Endpoint %s execution", response.Endpoint)
 
-		// Execution des scripts
+		// scripts exec
 		for _, script := range endCommand.ScriptsFilesNames {
 			output := types.FileOutput{
 				Filename: script,
-				Output:   "null",
+				Output:   "",
 				Success:  true,
 			}
 
 			outputCommand, err := execCommand(script, scriptFolderPath)
 			if err != nil {
-				outputCommand = outputCommand + " " + err.Error()
+				outputCommand = outputCommand + "\n" + err.Error()
 				output.Success = false
 			}
 
 			output.Output = outputCommand
 
-			logn.Verbose("Résulat du script : %s", script)
+			logn.Verbose("Script result : %s", script)
 			logn.Verbose("%s", output)
 
 			response.Outputs = append(response.Outputs, output)
@@ -65,21 +65,18 @@ func output(w http.ResponseWriter, response interface{}) {
 func execCommand(scriptFile string, scriptFolderPath string) (string, error) {
 	scriptFolderPath = util.Prefix(scriptFolderPath, "/")
 	scriptFile = strings.TrimPrefix(scriptFile, "/")
-
 	logn.Debug("%s %s", scriptFolderPath, scriptFile)
 
 	fullPath := scriptFolderPath + scriptFile
-
 	fullCommand := "." + fullPath
-
 	logn.Verbose("command %s", fullCommand)
 
 	cmd := exec.Command("sh", "-c", fullCommand)
-
 	output, err := cmd.CombinedOutput()
 	if err != nil {
 		return string(output), err
 	}
 
+	logn.Debug("output %s", string(output))
 	return string(output), nil
 }

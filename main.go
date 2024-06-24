@@ -7,11 +7,9 @@ import (
 
 	"github.com/nSakkriou/command-agent/cmd"
 	"github.com/nSakkriou/utils/pkg/logn"
-	"github.com/theritikchoure/logx"
 )
 
 func main() {
-	logx.ColoringEnabled = true
 	defer handlePanic()
 
 	// 1. Charger la config (/cmd/config)
