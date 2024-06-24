@@ -1,6 +1,6 @@
 github.com/gorilla/mux v1.8.1 h1:TuBL49tXwgrFYWhqrNgrUNEY92u81SPhu7sTdzQEiWY=
 github.com/gorilla/mux v1.8.1/go.mod h1:AKf9I4AEqPTmMytcMc0KkNouC66V3BtZ4qD5fmWSiMQ=
-github.com/nSakkriou/utils v0.0.5 h1:dBrpNaiDighpRawIrlKAFshOHSAldFaK1iiir9cplQw=
-github.com/nSakkriou/utils v0.0.5/go.mod h1:q3iHG0MHLNlc16lgZYaqY69zQKLWFmfzV/YcC1Gr+TE=
+github.com/nSakkriou/utils v0.0.6 h1:E0r6lBDQjMKent6pTb0vetbeOdRJayeBwjYRoAKbYjI=
+github.com/nSakkriou/utils v0.0.6/go.mod h1:q3iHG0MHLNlc16lgZYaqY69zQKLWFmfzV/YcC1Gr+TE=
 github.com/theritikchoure/logx v1.1.0 h1:MQPrHQ3gI9h8tSmRwRqKMf6jFkMRElu8VJYYNsM66Gs=
 github.com/theritikchoure/logx v1.1.0/go.mod h1:DcLTkuv0prI3pQCKPb35JPSbH/xNoyvMiNWeuYXriAQ=
