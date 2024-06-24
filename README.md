@@ -1,10 +1,10 @@
 # Command Agent
 
-Command agent it's go tool who start web api, and link endpoint with shell script.
+Command agent is a go tool who start web api, and link endpoint with shell script.
 
 To start agent you have to create a AgentFile.
 
-It's a JSON file with some mandatory parameter :
+It's a JSON file with some mandatory parameters :
 
 ```json
 {
@@ -20,8 +20,8 @@ It's a JSON file with some mandatory parameter :
 }
 ```
 
-Minimal AgentFile
-
+Before running, scripts_folder_path and all scripts_files_names have to exists. 
 
 $ go run main.go
-Start process
+
+Start process if AgentFile is in same folder.
