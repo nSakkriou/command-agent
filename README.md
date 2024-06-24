@@ -1,17 +1,27 @@
-Outil permettant de générer à partir d'un fichier de config un api web, qui lie un endpoint avec un script shell
+# Command Agent
 
-Au démarrage :
-agent path/config.json
+Command agent it's go tool who start web api, and link endpoint with shell script.
 
-Charge la config
-Génére les endpoints
-    - Check si le script existe
+To start agent you have to create a AgentFile.
 
----
+It's a JSON file with some mandatory parameter :
 
-Le config.json doit s'appeller AgentFile | EndCommandFile, ça ne sera que du json dedans, mais au moins comme ça on ne se pose pas de question du nom
+```json
+{
+  "port" : 7890,
+  "scripts_folder_path" : "/scripts/",
+  "endcommands" : [
+    {
+      "endpoint_name" : "start",
+      "scripts_files_names" : ["start.sh"],
+      "method" : "POST"
+    }
+  ]
+}
+```
 
-TODO :
-- Fixer les logs (artefacts)
-- Tester sur ma prod
-- Créer les commandes dans ma cli
+Minimal AgentFile
+
+
+$ go run main.go
+Start process

@@ -1,37 +1,37 @@
 {
-    "port" : 7890,
-    "scripts_folder_path" : "/scripts/",
-    "endcommands" : [
-      {
-        "endpoint_name" : "start",
-        "scripts_files_names" : ["start.sh"],
-        "method" : "POST"
-      },
-      {
-        "endpoint_name" : "stop",
-        "scripts_files_names" : ["stop.sh"],
-        "method" : "POST"
-      },
-      {
-        "endpoint_name" : "update",
-        "scripts_files_names" : ["update.sh"],
-        "method" : "POST"
-      },
-      {
-        "endpoint_name" : "deploy",
-        "scripts_files_names" : [
-          "start.sh",
-          "stop.sh",
-          "update.sh"
-        ],
-        "method" : "POST"
-      },
-      {
-        "endpoint_name" : "status",
-        "scripts_files_names" : [
-          "status.sh"
-        ],
-        "method" : "GET"
-      }
-    ]
-  }
+  "port" : 7890,
+  "scripts_folder_path" : "/scripts/",
+  "endcommands" : [
+    {
+      "endpoint_name" : "start",
+      "scripts_files_names" : ["start.sh"],
+      "method" : "POST"
+    },
+    {
+      "endpoint_name" : "stop",
+      "scripts_files_names" : ["stop.sh"],
+      "method" : "POST"
+    },
+    {
+      "endpoint_name" : "update",
+      "scripts_files_names" : ["update.sh"],
+      "method" : "POST"
+    },
+    {
+      "endpoint_name" : "deploy",
+      "scripts_files_names" : [
+        "start.sh",
+        "stop.sh",
+        "update.sh"
+      ],
+      "method" : "POST"
+    },
+    {
+      "endpoint_name" : "status",
+      "scripts_files_names" : [
+        "status.sh"
+      ],
+      "method" : "GET"
+    }
+  ]
+}
