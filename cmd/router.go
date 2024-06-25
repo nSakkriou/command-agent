@@ -25,6 +25,7 @@ func GetRouter(config *agent.AgentFile) *mux.Router {
 	// get all availables custom endpoints informations
 	router.HandleFunc("/available", endpoint.AvailableEndpoint(config.EndCommands)).Methods("GET")
 	router.HandleFunc("/health", endpoint.HealthEndpoint).Methods("GET")
+	router.HandleFunc("/ui", endpoint.GetUIEndpoint(config)).Methods("GET")
 
 	logn.Verbose("routes")
 
