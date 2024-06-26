@@ -157,6 +157,11 @@ func getUIHTMLTemplate() string {
         .mt-0 {
             margin-top : 0;
         }
+
+        .col {
+            display: flex;
+            flex-direction: column;
+        }
     </style>
 </head>
 
@@ -224,13 +229,13 @@ func getUIHTMLTemplate() string {
                 elem.classList.add("success")
                 elem.classList.remove("error")
 
-                elem.textContent = output.Filename + " Success !"
+                elem.textContent = output.Filename + " : Success !"
             }
             else {
                 elem.classList.add("error")
                 elem.classList.remove("success")
 
-                elem.textContent = output.Filename + " Failed !"
+                elem.textContent = output.Filename + " : Failed !"
             }
         }
 
