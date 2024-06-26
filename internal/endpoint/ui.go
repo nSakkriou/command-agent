@@ -24,7 +24,6 @@ func GetUIEndpoint(config *agent.AgentFile) func(w http.ResponseWriter, r *http.
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 		}
 	}
-
 }
 
 // Mandatory template
@@ -218,7 +217,7 @@ func getUIHTMLTemplate() string {
         <pre id="log" class="blue-bg" style="width: 100%; min-height: 200px; overflow-x: auto;margin-right: 20px;"></pre>
     </div>
 
-    <h1 class="mb-2">Endpoint available</h1>
+    <h1 class="mb-2">Endpoints availables</h1>
     
 	{{ range .EndCommands }}
 	<div class="command">
