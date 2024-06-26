@@ -25,3 +25,5 @@ Before running, scripts_folder_path and all scripts_files_names have to exists.
 $ go run main.go
 
 Start process if AgentFile is in same folder.
+
+Basic endpoint : 

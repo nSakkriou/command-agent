@@ -7,6 +7,7 @@ import (
 
 	"github.com/nSakkriou/command-agent/cmd"
 	"github.com/nSakkriou/utils/pkg/logn"
+	"github.com/rs/cors"
 )
 
 func main() {
@@ -30,8 +31,21 @@ func main() {
 	// 3. start web server with custom router and port
 	http.Handle("/", router)
 
+	// Check if CORS option used
+	var handler http.Handler
+	if globalConf.UseCors {
+		c := cors.New(cors.Options{
+			AllowedOrigins: globalConf.CorsOption.AllowedOrigins,
+		})
+
+		handler = c.Handler(router)
+	} else {
+		handler = router
+	}
+
+	// Start server
 	logn.Info("server start ... port %d", globalConf.Port)
-	err := http.ListenAndServe(":"+fmt.Sprint(globalConf.Port), router)
+	err := http.ListenAndServe(":"+fmt.Sprint(globalConf.Port), handler)
 	if err != nil {
 		logn.Error("cant start server %s", err)
 		os.Exit(0)

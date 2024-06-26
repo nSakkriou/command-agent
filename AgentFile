@@ -33,5 +33,9 @@
       ],
       "method" : "GET"
     }
-  ]
+  ],
+  "use_cors" : true,
+  "cors_option" : {
+    "allowed_origins" : ["*"]
+  }
 }
