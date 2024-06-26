@@ -62,7 +62,7 @@ func output(w http.ResponseWriter, response interface{}) {
 	}
 }
 
-func execCommand(scriptFile string, scriptFolderPath string) (string, error) {
+func execCommand(scriptFile, scriptFolderPath string) (string, error) {
 	scriptFolderPath = util.Prefix(scriptFolderPath, "/")
 	scriptFile = strings.TrimPrefix(scriptFile, "/")
 	logn.Debug("%s %s", scriptFolderPath, scriptFile)

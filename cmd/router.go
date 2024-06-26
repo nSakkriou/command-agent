@@ -18,7 +18,10 @@ func GetRouter(config *agent.AgentFile) *mux.Router {
 		logn.Debug("end command description : %+v", endCommand)
 
 		handler := endpoint.GenerateEndpoint(endCommand, config.ScriptsFolderPath)
+		contentHandler := endpoint.GetContentEndpoint(endCommand, config.ScriptsFolderPath)
+
 		router.HandleFunc(util.Prefix(endCommand.EndpointName, "/"), handler).Methods(endCommand.Method)
+		router.HandleFunc(util.Prefix(endCommand.EndpointName, "/")+"/content", contentHandler).Methods("GET")
 	}
 
 	// basic route
