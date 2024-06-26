@@ -162,10 +162,44 @@ func getUIHTMLTemplate() string {
             display: flex;
             flex-direction: column;
         }
+
+        #loadingScreen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.4);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 4px solid #3498db;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            opacity: 1;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
     </style>
 </head>
 
 <body>
+    <div id="loadingScreen" style="display: none">
+        <div class="spinner"></div>
+        <p>Loading...</p>
+    </div>
+
     <div id="log-wrapper mb-2">
         <div class="row">
             <h2 class="p-0 mr-2">Logs</h2>
@@ -210,6 +244,7 @@ func getUIHTMLTemplate() string {
         const log = document.getElementById("log")
         const status = document.getElementById("status-code")
         const successRow = document.getElementById("success-row")
+        const loader = document.getElementById("loadingScreen")
 
         const setSucessRow = (outputs) => {
             cleanContainer("#success-row")
@@ -240,21 +275,23 @@ func getUIHTMLTemplate() string {
         }
 
         document.getElementById("clear-log").addEventListener("click", e => {
-            log.textContent = ""
-            status.textContent = ""
-            cleanContainer("#success-row")
+            clean()
         })
 
         document.querySelectorAll(".show-content").forEach(e => {
             const endpoint = e.dataset.endpoint
 
             e.addEventListener("click", event => {
+                loader.style.display = "flex"
+                clean()
+
                 fetch(endpoint)
                 .then(response => {
                     return response.text()
                 })
                 .then(response => {
                     log.textContent = response
+                    loader.style.display = "none"
                 })
                 .catch(error => log.textContent = "Failed to fetch data : " + error)  
         })})
@@ -264,6 +301,9 @@ func getUIHTMLTemplate() string {
             const method = e.dataset.method
 
             e.addEventListener("click", event => {
+                loader.style.display = "flex"
+                clean()
+                
                 fetch(endpoint, {
                     method : method
                 })
@@ -274,6 +314,7 @@ func getUIHTMLTemplate() string {
                 .then(res => {
                     setSucessRow(res.Outputs)
                     log.textContent = JSON.stringify(res, null, 2).replace(/\\n/g, '\n\t\t');
+                    loader.style.display = "none"
                     
                 })
                 .catch(error => log.textContent = "Failed to fetch data : " + error)  
@@ -284,6 +325,12 @@ func getUIHTMLTemplate() string {
             while(div.firstChild){
                 div.removeChild(div.firstChild);
             }
+        }
+
+        const clean = () => {
+            status.textContent = ""
+            log.textContent = ""
+            cleanContainer("#success-row")
         }
     </script>
 </body>
