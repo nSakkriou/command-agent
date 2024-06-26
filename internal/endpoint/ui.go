@@ -175,6 +175,7 @@ func getUIHTMLTemplate() string {
             justify-content: center;
             align-items: center;
             z-index: 1000;
+            position: fixed;
         }
 
         .spinner {
