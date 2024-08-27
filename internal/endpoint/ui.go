@@ -29,10 +29,11 @@ func GetUIEndpoint(config *agent.AgentFile) func(w http.ResponseWriter, r *http.
 // Mandatory template
 func getUIHTMLTemplate() string {
 	return `
-<!DOCTYPE html>
-<html lang="en">
+<html lang="fr-fr" class=" lang-fr">
 
 <head>
+    <style data-hubspot-styled-components=""></style>
+    <style data-hubspot-styled-components="active" data-styled-version="5.0.1"></style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Command Agent</title>
@@ -44,7 +45,9 @@ func getUIHTMLTemplate() string {
             background-color: #f4f4f4;
         }
 
-        h1, h2, h3 {
+        h1,
+        h2,
+        h3 {
             margin: 0;
             padding: 10px 0;
         }
@@ -154,11 +157,11 @@ func getUIHTMLTemplate() string {
         }
 
         .mr-2 {
-            margin-right : 10px;
+            margin-right: 10px;
         }
 
         .mt-0 {
-            margin-top : 0;
+            margin-top: 0;
         }
 
         .col {
@@ -192,91 +195,109 @@ func getUIHTMLTemplate() string {
         }
 
         @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
         }
 
-    body {
-        margin: 0;
-        padding: 0;
-        font-family: Arial, sans-serif;
-    }
-
-    nav {
-        background-color: #333;
-        overflow: hidden;
-        width: 100%;
-        position: fixed;
-        top: 0;
-        left: 0;
-        z-index: 1000;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    }
-
-    nav a {
-        float: left;
-        display: block;
-        color: white;
-        text-align: center;
-        padding: 14px 20px;
-        text-decoration: none;
-        font-size: 17px;
-        transition: background-color 0.3s, color 0.3s;
-    }
-
-    nav a:hover {
-        background-color: #575757;
-        color: #fff;
-    }
-
-    nav a.active {
-        background-color: #4CAF50;
-        color: white;
-    }
-
-    nav .icon {
-        display: none;
-    }
-
-    nav img.logo {
-        float: left;
-        padding: 5px 15px;
-        height: 50px;
-    }
-
-    @media screen and (max-width: 600px) {
-        nav a:not(:first-child) {
-            display: none;
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
         }
-        nav a.icon {
-            float: right;
-            display: block;
-        }
-    }
 
-    @media screen and (max-width: 600px) {
-        nav.responsive {
-            position: relative;
-        }
-        nav.responsive .icon {
-            position: absolute;
-            right: 0;
+        nav {
+            background-color: #333;
+            overflow: hidden;
+            width: 100%;
+            position: fixed;
             top: 0;
+            left: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
-        nav.responsive a {
-            float: none;
-            display: block;
-            text-align: left;
+
+        nav img.logo {
+            height: 50px;
         }
-    }
 
-    main {
-        padding-top: 70px; /* Compense la hauteur de la nav fixée */
-        margin-left : 10px;
-        margin-right: 10px;
+        .nav-links {
+            display: flex;
+            justify-content: start;
+            align-items: center;
+            flex: 1;
+        }
 
-    }
+        nav a {
+            color: white;
+            text-align: center;
+            padding: 14px 20px;
+            text-decoration: none;
+            font-size: 17px;
+            transition: background-color 0.3s, color 0.3s;
+        }
 
+        nav a:hover {
+            background-color: #575757;
+            color: #fff;
+        }
+
+        nav a.active {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        nav .icon {
+            display: none;
+            font-size: 24px;
+            color: white;
+            cursor: pointer;
+            margin-left: auto;
+        }
+
+        @media screen and (max-width: 800px) {
+            nav.responsive {
+                height: auto; /* Permet au nav de s'agrandir pour accueillir les liens */
+            }
+
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+            }
+
+            nav.responsive .nav-links {
+                display: flex;
+                position: fixed;
+                top: 60px;
+                left: 0;
+                background-color: #333;
+            }
+
+            nav.responsive .nav-links a {
+                text-align: left;
+                padding: 10px;
+                width: 100%;
+                box-sizing: border-box;
+            }
+
+            nav .icon {
+                display: block;
+            }
+        }
+
+        main {
+            padding-top: 70px;
+            margin: 20px;
+        }
     </style>
 </head>
 
@@ -288,11 +309,18 @@ func getUIHTMLTemplate() string {
 
     {{ if .UseCustomNav}}
         <nav>
-            <img src="https://raw.githubusercontent.com/golang-samples/gopher-vector/master/gopher-side_color.png" alt="Gopher Logo" class="logo">
-            <a href="javascript:void(0);" class="icon" onclick="toggleNav()">&#9776;</a>
-            {{ range .CustomNavDescription}}
-                <a href="{{ .Link }}" class="{{if eq .Label "Home"}}active{{end}}">{{ .Label }}</a>
-            {{ end }}
+
+            <img src="https://raw.githubusercontent.com/golang-samples/gopher-vector/master/gopher-side_color.png"
+            alt="Gopher Logo" class="logo">
+
+            <div class="nav-links">
+                {{ range .CustomNavDescription}}
+                    <a href="{{ .Link }}" class="navitem">{{ .Label }}</a>
+                {{ end }}
+            </div>
+            
+            
+        <a href="javascript:void(0);" class="icon" onclick="toggleNav()">☰</a>
         </nav>
     {{ end }}
     
@@ -431,13 +459,9 @@ func getUIHTMLTemplate() string {
         }
 
         function toggleNav() {
-            var nav = document.querySelector("nav");
-            if (nav.className === "") {
-                nav.className += "responsive";
-            } else {
-                nav.className = "";
+                var nav = document.querySelector("nav");
+                nav.classList.toggle("responsive");
             }
-        }
     </script>
     </main>
 </body>
