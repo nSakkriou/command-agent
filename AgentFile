@@ -34,8 +34,18 @@
       "method" : "GET"
     }
   ],
+
+
   "use_cors" : true,
   "cors_option" : {
     "allowed_origins" : ["*"]
-  }
+  },
+
+  "use_custom_nav" : true,
+  "custom_nav_links" : [
+    {
+      "label" : "Dashboard",
+      "link" : "http://nathansakkriou.com/dashboard"
+    }
+  ]
 }

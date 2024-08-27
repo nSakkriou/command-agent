@@ -67,6 +67,10 @@ func getUIHTMLTemplate() string {
             margin-bottom: 20px;
         }
 
+        .mt-2 {
+            margin-top: 20px;
+        }
+
         .command {
             margin-bottom: 20px;
             padding: 10px;
@@ -191,6 +195,88 @@ func getUIHTMLTemplate() string {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+    }
+
+    nav {
+        background-color: #333;
+        overflow: hidden;
+        width: 100%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 1000;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    nav a {
+        float: left;
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 14px 20px;
+        text-decoration: none;
+        font-size: 17px;
+        transition: background-color 0.3s, color 0.3s;
+    }
+
+    nav a:hover {
+        background-color: #575757;
+        color: #fff;
+    }
+
+    nav a.active {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    nav .icon {
+        display: none;
+    }
+
+    nav img.logo {
+        float: left;
+        padding: 5px 15px;
+        height: 50px;
+    }
+
+    @media screen and (max-width: 600px) {
+        nav a:not(:first-child) {
+            display: none;
+        }
+        nav a.icon {
+            float: right;
+            display: block;
+        }
+    }
+
+    @media screen and (max-width: 600px) {
+        nav.responsive {
+            position: relative;
+        }
+        nav.responsive .icon {
+            position: absolute;
+            right: 0;
+            top: 0;
+        }
+        nav.responsive a {
+            float: none;
+            display: block;
+            text-align: left;
+        }
+    }
+
+    main {
+        padding-top: 70px; /* Compense la hauteur de la nav fixée */
+        margin-left : 10px;
+        margin-right: 10px;
+
+    }
+
     </style>
 </head>
 
@@ -200,7 +286,18 @@ func getUIHTMLTemplate() string {
         <p>Loading...</p>
     </div>
 
-    <div id="log-wrapper mb-2">
+    {{ if .UseCustomNav}}
+        <nav>
+            <img src="https://raw.githubusercontent.com/golang-samples/gopher-vector/master/gopher-side_color.png" alt="Gopher Logo" class="logo">
+            <a href="javascript:void(0);" class="icon" onclick="toggleNav()">&#9776;</a>
+            {{ range .CustomNavDescription}}
+                <a href="{{ .Link }}" class="{{if eq .Label "Home"}}active{{end}}">{{ .Label }}</a>
+            {{ end }}
+        </nav>
+    {{ end }}
+    
+    <main>
+    <div id="log-wrapper mt-2 mb-2">
         <div class="row">
             <h2 class="p-0 mr-2">Logs</h2>
             <button class="blue-bg p-2 pointer" style="border: 0.5px solid black;" id="clear-log">Clear</button>
@@ -332,7 +429,17 @@ func getUIHTMLTemplate() string {
             log.textContent = ""
             cleanContainer("#success-row")
         }
+
+        function toggleNav() {
+            var nav = document.querySelector("nav");
+            if (nav.className === "") {
+                nav.className += "responsive";
+            } else {
+                nav.className = "";
+            }
+        }
     </script>
+    </main>
 </body>
 
 </html>
